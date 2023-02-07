@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="MediaPlayerApp.EditTag"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MediaPlayerApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300" Background="Transparent">
+    <Border>
+    <Grid ShowGridLines="True">
+            <Grid.Background>
+                <ImageBrush ImageSource="C:\Users\abelg\source\repos\MediaPlayerApp\MediaPlayerApp\images\userControl.jpg" Opacity="0.6"/>
+            </Grid.Background>
+           <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+        <!--<TextBlock Text="gsdfgsdfg" Grid.Row="0"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
+        <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="22" FontFamily="Cambria" FontWeight="Bold" Foreground="White">Tag Editor</Label>
+            <TextBox x:Name="tag_title"  Grid.Row="1"  FontSize="14" VerticalAlignment="Center"  Padding="5" Foreground="White" Background="Transparent"></TextBox>
+            <TextBox x:Name="tag_artist"  Grid.Row="2"  FontSize="14" VerticalAlignment="Center" Padding="5" Foreground="White" Background="Transparent"></TextBox>
+            <TextBox x:Name="tag_album"  Grid.Row="3"  FontSize="14" VerticalAlignment="Center"  Padding="5" Foreground="White" Background="Transparent"></TextBox>
+            <TextBox x:Name="tag_year"  Grid.Row="4"  FontSize="14" VerticalAlignment="Center"   Padding="5" Foreground="White" Background="Transparent"></TextBox>
+            <Button x:Name="save" Grid.Row="5"  FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Background="DarkGoldenrod" Foreground="White" Click="save_Click">Save</Button>
+
+        </Grid>
+    </Border>
+</UserControl>
