@@ -33,7 +33,7 @@ namespace MediaPlayerApp
             }
             else
             {
-                MessageBox.Show("Error!, currentFile maybe null");
+                MessageBox.Show("Error!, current File maybe null");
             }
             
         }

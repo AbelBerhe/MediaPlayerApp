@@ -12,8 +12,9 @@
     <None Remove="images\media-play.png" />
     <None Remove="images\musicnote.png" />
     <None Remove="images\open_file.png" />
-    <None Remove="images\pause-icon.png" />
-    <None Remove="images\stop-icon.png" />
+    <None Remove="images\pause.png" />
+    <None Remove="images\play-button.png" />
+    <None Remove="images\stop-button.png" />
     <None Remove="images\textured.jpg" />
   </ItemGroup>
 
@@ -26,9 +27,12 @@
     <Content Include="images\open_file.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\pause.png" />
+    <Resource Include="images\play-button.png" />
+    <PackageReference Include="NAudio" Version="2.1.0" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
-    <Resource Include="images\pause-icon.png" />
-    <Resource Include="images\stop-icon.png" />
+    <PackageReference Include="VisioForge.DotNet.Core.TRIAL" Version="15.1.12" />
+    <Resource Include="images\stop-button.png" />
     <Resource Include="images\textured.jpg" />
   </ItemGroup>
 

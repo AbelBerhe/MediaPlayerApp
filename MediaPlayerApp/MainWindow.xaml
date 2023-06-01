@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediaPlayerApp"
         mc:Ignorable="d"
-        Title="Media Tagger" Height="450" Width="500" VerticalAlignment="Center" HorizontalAlignment="Center">
+        Title="Media Tagger" Height="500" Width="500" VerticalAlignment="Center" HorizontalAlignment="Center">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" CanExecute="Open_CanExecute" Executed="Open_Executed"/>
     </Window.CommandBindings>
@@ -47,7 +47,7 @@
         <StackPanel Orientation="Horizontal" Height="362" Width="500">
 
             <StackPanel Orientation="Vertical"  Width="100" Height="366" Background="#FFF8F8FF">
-                <Button x:Name="oponFile" Width="99" Height="70" Background="Transparent" BorderThickness="0" Margin="0,5,0,20" Style="{StaticResource  TransparentStyle}" Click="oponFile_Click">
+                <Button x:Name="openFile" Width="99" Height="70" Background="Transparent" BorderThickness="0" Margin="0,5,0,20" Style="{StaticResource  TransparentStyle}" Click="openFile_Click">
                     <Image Source="images\open_file.png" Width="97"/>
                 </Button>
 
@@ -68,6 +68,19 @@
             </StackPanel>
 
         </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5 0 5 ">
+         
+            <Button x:Name="pause_button" Click="Pause_Click">
+                <Image Source="images\pause.png" Width="30"/>
+            </Button>
+            <Button x:Name="play_button" Click="Play_Click">
+                <Image Source="images\play-button.png" Width="30"/>
+            </Button>
+            <Button x:Name="stop_button" Click="Stop_Click">
+                <Image Source="images\stop-button.png" Width="30"/>
+            </Button>
+        </StackPanel>
+        <ProgressBar Name="progressBar" Width="400" Height="10" Minimum="0" Maximum="100"/>
     </StackPanel>
 
 </Window>

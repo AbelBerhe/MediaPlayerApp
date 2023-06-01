@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using VisioForge.Libs.NAudio.Wave;
 //using static System.Net.Mime.MediaTypeNames;
 
 
@@ -27,26 +31,59 @@ namespace MediaPlayerApp
     {
         Mp3 mp = new Mp3();
        TagLib.File? currentFile;
+        private DispatcherTimer timer;
+        private int progress;
         string fileName="";
         bool flag = false;
         bool saving = false;
-        
+        bool isPlaying = false;
+        bool isPaused =  false;
+        private Mp3FileReader audioFile;
+
         public MainWindow()
         {
             InitializeComponent();
             EditPanel.Visibility = Visibility.Hidden;
             pause.IsEnabled = false;
             stop.IsEnabled = false;
+
+            // Create and configure the DispatcherTimer control
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1); // Update every 1 second
+            timer.Tick += Timer_Tick;
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Update the progress bar value
+            progressBar.Value = progress;
 
-        private void oponFile_Click(object sender, RoutedEventArgs e)
+            // Check if the progress has reached the maximum value
+            if (progress >= progressBar.Maximum)
+            {
+                // Stop the timer when the progress reaches the maximum
+                timer.Stop();
+                MessageBox.Show("Music playback completed!");
+            }
+            else
+            {
+                // Increment the progress value
+                progress++;
+            }
+        }
+
+        private void openFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
             if (openFile.ShowDialog() == true)
             {
                 currentFile = TagLib.File.Create(openFile.FileName);
                 fileName = openFile.FileName;
+
+                audioFile = new Mp3FileReader(fileName);
+                // Set the maximum value of the progress bar based on the duration of the audio file
+                progressBar.Maximum = (int)audioFile.TotalTime.TotalSeconds;
+
                 mp.setProperties(currentFile);
                 flag = true;
             }
@@ -134,38 +171,71 @@ namespace MediaPlayerApp
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-           // if (flag)
-           // {
-                if (mediaPlayer.Source == null)
-                {
-                    mediaPlayer.Source = new Uri(fileName);
-                }
-      
-            mediaPlayer.Play();
-           
+          
 
+            if (mediaPlayer.Source == null)
+            {
+                mediaPlayer.Source = new Uri(fileName);
+            }
+
+
+            if (!isPlaying)
+            {
+                if (isPaused)
+                {
+                    // Start playing the music
+                    mediaPlayer.Play();
+                    timer.Start();
+                    isPlaying = true;
+                    isPaused = false;
+
+                }else{
+                    // Start playing the music
+                    mediaPlayer.Play();
+
+                    // Reset the progress bar and start the timer
+                    progress = (int)progressBar.Minimum;
+                    timer.Start();
+                    isPlaying = true;
+                }
+
+               
+            }
 
             pause.IsEnabled = true;
             stop.IsEnabled = true;
-           // }
-          //  else
-           // {
-              //  MessageBox.Show("Please select song first!");
-            //}
-          
+
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
-            
-            mediaPlayer.Pause();
+            if (isPlaying)
+            {
+                // Pause the music
+                mediaPlayer.Pause();
+                progress = (int)progressBar.Value;
+                // Stop the timer
+                timer.Stop();
+                isPlaying = false;
+                isPaused = true;
+            }
+         
        
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
-            mediaPlayer.Close();
+            if (isPlaying)
+            {
+                // Stop the music
+                mediaPlayer.Stop();
+                mediaPlayer.Close();
+                // Reset the progress bar and stop the timer
+                progress = (int)progressBar.Minimum;
+                timer.Stop();
+                isPlaying = false;
+            }
+           
 
         }
 
