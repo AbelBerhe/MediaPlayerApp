@@ -11,6 +11,7 @@
     <None Remove="images\edit.png" />
     <None Remove="images\media-play.png" />
     <None Remove="images\musicnote.png" />
+    <None Remove="images\nowPlaying.jpg" />
     <None Remove="images\open_file.png" />
     <None Remove="images\pause.png" />
     <None Remove="images\play-button.png" />
@@ -27,6 +28,7 @@
     <Content Include="images\open_file.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\nowPlaying.jpg" />
     <Resource Include="images\pause.png" />
     <Resource Include="images\play-button.png" />
     <PackageReference Include="NAudio" Version="2.1.0" />

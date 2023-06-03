@@ -43,14 +43,24 @@ namespace MediaPlayerApp
         public MainWindow()
         {
             InitializeComponent();
+            CenterWindowOnScreen();
             EditPanel.Visibility = Visibility.Hidden;
             pause.IsEnabled = false;
             stop.IsEnabled = false;
+            play.IsEnabled = false;
+           
+
 
             // Create and configure the DispatcherTimer control
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1); // Update every 1 second
             timer.Tick += Timer_Tick;
+        }
+
+        private void CenterWindowOnScreen()
+        {
+            //center the window 
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -86,6 +96,7 @@ namespace MediaPlayerApp
 
                 mp.setProperties(currentFile);
                 flag = true;
+               
             }
 
         }
@@ -99,7 +110,7 @@ namespace MediaPlayerApp
         private void NowPlaying_Click(object sender, RoutedEventArgs e)
         {
 
-            brash.ImageSource = new BitmapImage(new Uri("C:\\Users\\abelg\\source\\repos\\MediaPlayerApp\\MediaPlayerApp\\images\\nowPlaying.jpg", UriKind.Absolute));
+            brash.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/nowPlaying.jpg", UriKind.Absolute));
             brash.Stretch = Stretch.Uniform;
 
             // Freeze the brush (make it unmodifiable) for performance benefits.
@@ -116,7 +127,7 @@ namespace MediaPlayerApp
         }
 
  
-
+        //
         private void EditTag_Click(object sender, RoutedEventArgs e)
         {
             if (flag)
@@ -129,7 +140,6 @@ namespace MediaPlayerApp
 
 
                 bool result = strA.Trim().Equals(strB.Trim());
-               // MessageBox.Show(result.ToString());
                 if (result == false)
                {
                     foreach (string artist in mp.Artists)
@@ -173,34 +183,50 @@ namespace MediaPlayerApp
         {
           
 
-            if (mediaPlayer.Source == null)
-            {
-                mediaPlayer.Source = new Uri(fileName);
-            }
+           
 
-
-            if (!isPlaying)
+            if (flag == true)
             {
-                if (isPaused)
+                if (mediaPlayer.Source == null)
                 {
-                    // Start playing the music
-                    mediaPlayer.Play();
-                    timer.Start();
-                    isPlaying = true;
-                    isPaused = false;
-
-                }else{
-                    // Start playing the music
-                    mediaPlayer.Play();
-
-                    // Reset the progress bar and start the timer
-                    progress = (int)progressBar.Minimum;
-                    timer.Start();
-                    isPlaying = true;
+                    mediaPlayer.Source = new Uri(fileName);
                 }
 
-               
+                if (!isPlaying)
+                {
+                    if (isPaused)
+                    {
+                        // Start playing the music
+                        mediaPlayer.Play();
+                        timer.Start();
+                        isPlaying = true;
+                        isPaused = false;
+
+                    }
+                    else
+                    {
+                        // Start playing the music
+                        mediaPlayer.Play();
+
+                        // Reset the progress bar and start the timer
+                        progress = (int)progressBar.Minimum;
+                        timer.Start();
+                        isPlaying = true;
+                    }
+
+
+                }
             }
+            else
+            {
+                // Calculate the position to center the MessageBox
+                double windowLeft = Left + (Width - ActualWidth) / 2; 
+                double windowTop = Top + (Height - ActualHeight) / 2;
+
+                MessageBox.Show("Please select a song first!");
+            }
+
+        
 
             pause.IsEnabled = true;
             stop.IsEnabled = true;
@@ -227,7 +253,7 @@ namespace MediaPlayerApp
         {
             if (isPlaying)
             {
-                // Stop the music
+                
                 mediaPlayer.Stop();
                 mediaPlayer.Close();
                 // Reset the progress bar and stop the timer
